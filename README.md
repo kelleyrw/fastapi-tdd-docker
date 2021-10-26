@@ -23,3 +23,9 @@ brew install black
 ```
 
 To setup with Intellij/Pycharm, follow instructions [here](https://black.readthedocs.io/en/stable/integrations/editors.html).
+
+```
+brew install isort
+```
+
+To setup with Intellij/Pycharm, follow instructions [here](https://github.com/pycqa/isort/wiki/isort-Plugins).
