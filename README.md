@@ -1,5 +1,7 @@
 # Test-Driven Development with FastAPI and Docker 
 
+![Continuous Integration and Delivery](https://github.com/kelleyrw/fastapi-tdd-docker/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)
+
 https://testdriven.io/courses/tdd-fastapi/
 
 ## setup
@@ -29,3 +31,5 @@ brew install isort
 ```
 
 To setup with Intellij/Pycharm, follow instructions [here](https://github.com/pycqa/isort/wiki/isort-Plugins).
+
+
