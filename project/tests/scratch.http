@@ -15,3 +15,7 @@ Content-Type: application/json
 {
     "url": "https://testdriven.io"
 }
+
+###
+
+GET https://shrouded-anchorage-19961.herokuapp.com/ping
