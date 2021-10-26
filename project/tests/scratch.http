@@ -1,0 +1,17 @@
+###
+GET  http://localhost:8004/ping
+
+###
+
+GET  http://localhost:8004/ping
+
+
+###
+
+POST https://shrouded-anchorage-19961.herokuapp.com/summaries/
+Content-Type: application/json
+
+
+{
+    "url": "https://testdriven.io"
+}
