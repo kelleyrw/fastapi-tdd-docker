@@ -2,8 +2,16 @@ import json
 
 import pytest
 
+from app.api import summaries
+from app.models.orm import TextSummary
 
-def test_create_summary(test_app_with_db):
+
+def test_create_summary(test_app_with_db, monkeypatch):
+    def mock_generate_summary(summary_id, url):
+        return None
+
+    monkeypatch.setattr(summaries, "generate_summary", mock_generate_summary)
+
     response = test_app_with_db.post(
         "/summaries/", data=json.dumps({"url": "https://foo.bar"})
     )
@@ -30,11 +38,16 @@ def test_create_summaries_invalid_json(test_app):
     assert response.json()["detail"][0]["msg"] == "URL scheme not permitted"
 
 
-def test_read_summary(test_app_with_db):
+def test_read_summary(test_app_with_db, monkeypatch):
+    async def mock_generate_summary(summary_id, url):
+        await TextSummary.filter(id=summary_id).update(summary="foo")
+
+    monkeypatch.setattr(summaries, "generate_summary", mock_generate_summary)
     response = test_app_with_db.post(
         "/summaries/", data=json.dumps({"url": "https://foo.bar"})
     )
     summary_id = response.json()["id"]
+    # time.sleep(10)
 
     response = test_app_with_db.get(f"/summaries/{summary_id}/")
     assert response.status_code == 200
@@ -42,11 +55,15 @@ def test_read_summary(test_app_with_db):
     response_dict = response.json()
     assert response_dict["id"] == summary_id
     assert response_dict["url"] == "https://foo.bar"
-    assert response_dict["summary"]
+    assert response_dict["summary"] == "foo"
     assert response_dict["created_at"]
 
 
-def test_read_all_summaries(test_app_with_db):
+def test_read_all_summaries(test_app_with_db, monkeypatch):
+    def mock_generate_summary(summary_id, url):
+        return None
+
+    monkeypatch.setattr(summaries, "generate_summary", mock_generate_summary)
     response = test_app_with_db.post(
         "/summaries/", data=json.dumps({"url": "https://foo.bar"})
     )
@@ -59,7 +76,11 @@ def test_read_all_summaries(test_app_with_db):
     assert len(list(filter(lambda d: d["id"] == summary_id, response_list))) == 1
 
 
-def test_remove_summary(test_app_with_db):
+def test_remove_summary(test_app_with_db, monkeypatch):
+    def mock_generate_summary(summary_id, url):
+        return None
+
+    monkeypatch.setattr(summaries, "generate_summary", mock_generate_summary)
     response = test_app_with_db.post(
         "/summaries/", data=json.dumps({"url": "https://foo.bar"})
     )
@@ -70,7 +91,11 @@ def test_remove_summary(test_app_with_db):
     assert response.json() == {"id": summary_id, "url": "https://foo.bar"}
 
 
-def test_update_summary(test_app_with_db):
+def test_update_summary(test_app_with_db, monkeypatch):
+    def mock_generate_summary(summary_id, url):
+        return None
+
+    monkeypatch.setattr(summaries, "generate_summary", mock_generate_summary)
     response = test_app_with_db.post(
         "/summaries/", data=json.dumps({"url": "https://foo.bar"})
     )
@@ -89,7 +114,11 @@ def test_update_summary(test_app_with_db):
     assert response_dict["created_at"]
 
 
-def test_update_summary_incorrect_id(test_app_with_db):
+def test_update_summary_incorrect_id(test_app_with_db, monkeypatch):
+    def mock_generate_summary(summary_id, url):
+        return None
+
+    monkeypatch.setattr(summaries, "generate_summary", mock_generate_summary)
     response = test_app_with_db.put(
         "/summaries/999/",
         data=json.dumps({"url": "https://foo.bar", "summary": "updated!"}),
@@ -114,7 +143,11 @@ def test_update_summary_incorrect_id(test_app_with_db):
     }
 
 
-def test_update_summary_invalid_json(test_app_with_db):
+def test_update_summary_invalid_json(test_app_with_db, monkeypatch):
+    def mock_generate_summary(summary_id, url):
+        return None
+
+    monkeypatch.setattr(summaries, "generate_summary", mock_generate_summary)
     response = test_app_with_db.post(
         "/summaries/", data=json.dumps({"url": "https://foo.bar"})
     )

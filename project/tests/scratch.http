@@ -3,8 +3,18 @@ GET  http://localhost:8004/ping
 
 ###
 
-GET  http://localhost:8004/ping
+GET  http://localhost:8000/summaries
 
+
+###
+
+POST http://localhost:8000/summaries/
+Content-Type: application/json
+
+
+{
+    "url": "https://testdriven.io"
+}
 
 ###
 
@@ -19,3 +29,39 @@ Content-Type: application/json
 ###
 
 GET https://shrouded-anchorage-19961.herokuapp.com/ping
+
+
+###
+
+GET https://shrouded-anchorage-19961.herokuapp.com/summaries
+
+###
+
+GET https://shrouded-anchorage-19961.herokuapp.com/summaries/1
+
+###
+
+POST https://shrouded-anchorage-19961.herokuapp.com/summaries/
+Content-Type: application/json
+
+
+{
+    "url": "https://testdriven.io"
+}
+
+###
+
+PUT https://shrouded-anchorage-19961.herokuapp.com/summaries/2/
+Content-Type: application/json
+
+
+{
+    "url": "https://testdriven.io",
+    "summary": "super"
+}
+
+###
+
+DELETE https://shrouded-anchorage-19961.herokuapp.com/summaries/2/
+
+###
